@@ -1,16 +1,24 @@
-# Install Codex Skills Straight From GitHub
+# Install Codex Skills From GitHub In One Command
 
-`codex-skill-installer` is a small utility for listing Codex-installable skills and copying them into `$CODEX_HOME/skills` without manual repo cloning.
+`codex-skill-installer` is a small utility for listing Codex-installable skills and copying them into `$CODEX_HOME/skills` without cloning whole repos or doing manual folder surgery.
 
 It supports:
 
 - listing curated skills from GitHub
 - installing a skill from an `owner/repo` plus path
 - installing from a full GitHub URL
+- installing multiple skills in one run
 - public repos via direct download
 - private repos or auth-required repos via sparse checkout fallback
 
 ![Preview](assets/preview.svg)
+
+## At A Glance
+
+- list installable skills before you pick one
+- install directly from a repo path or GitHub URL
+- keep private repo support through existing git auth or `GH_TOKEN`
+- default to `${CODEX_HOME:-~/.codex}/skills` so the result lands where Codex expects it
 
 ## Why This Exists
 
@@ -50,6 +58,14 @@ python3 scripts/install-skill-from-github.py \
   --dest ./sandbox-skills
 ```
 
+Install multiple skills in one run:
+
+```bash
+python3 scripts/install-skill-from-github.py \
+  --repo openai/skills \
+  --path skills/.curated/aspnet-core skills/.curated/figma
+```
+
 ## Requirements
 
 - Python 3
@@ -66,6 +82,17 @@ python3 scripts/install-skill-from-github.py \
 - validates that skill paths stay inside the source repo
 - accepts `GITHUB_TOKEN` or `GH_TOKEN` for private repo access
 - falls back from archive download to sparse checkout when needed
+- supports `--method auto|download|git` when you need to force a path
+- supports `--name` when you want a custom installed skill directory name
+
+## Private Repo Notes
+
+For private repos, either of these usually works:
+
+- existing local git credentials for sparse checkout fallback
+- `GH_TOKEN` or `GITHUB_TOKEN` for authenticated download requests
+
+The scripts do not persist credentials. They only read token env vars already present in your shell session.
 
 ## Smoke-Tested Examples
 
