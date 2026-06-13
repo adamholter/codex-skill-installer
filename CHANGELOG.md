@@ -1,3 +1,8 @@
+## 2026-06-13
+
+- Re-ran the public smoke tests with a clean temporary `HOME` to confirm the installer still works without Adam's local Codex state.
+- Documented the machine-readable `--format json` listing output and refreshed the verification examples to match the current behavior.
+
 ## 2026-06-11
 
 - Refreshed the public packaging around the current local workflow instead of relying on the older README snapshot.

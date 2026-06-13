@@ -34,6 +34,12 @@ List curated skills:
 python3 scripts/list-skills.py
 ```
 
+List curated skills as JSON:
+
+```bash
+python3 scripts/list-skills.py --format json
+```
+
 Install from a repo path:
 
 ```bash
@@ -96,10 +102,11 @@ The scripts do not persist credentials. They only read token env vars already pr
 
 ## Smoke-Tested Examples
 
-The scripts were verified on `2026-05-20` with:
+The scripts were verified on `2026-06-13` with a clean temporary `HOME` using:
 
 ```bash
-python3 scripts/list-skills.py
+HOME="$(mktemp -d)" python3 scripts/list-skills.py
+HOME="$(mktemp -d)" python3 scripts/list-skills.py --format json
 python3 scripts/install-skill-from-github.py \
   --repo openai/skills \
   --path skills/.curated/aspnet-core \
@@ -107,6 +114,14 @@ python3 scripts/install-skill-from-github.py \
 python3 scripts/install-skill-from-github.py \
   --url https://github.com/openai/skills/tree/main/skills/.curated/aspnet-core \
   --dest "$(mktemp -d)"
+```
+
+The JSON listing prints an array of skill objects:
+
+```json
+[
+  { "name": "aspnet-core", "installed": false }
+]
 ```
 
 ## Repo Layout
